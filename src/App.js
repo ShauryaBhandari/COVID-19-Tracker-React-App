@@ -6,14 +6,23 @@ import "./App.css";
 import { fetchData } from "./api/index";
 
 export default class App extends Component {
+  state = {
+    data: {},
+  };
+
   async componentDidMount() {
-    const data = await fetchData();
-    console.log(data);
+    const fetchedData = await fetchData();
+    // console.log(data);
+    this.setState({ data: fetchedData });
   }
   render() {
+    const { data } = this.state;
     return (
       <div>
-        <h1 className="text-center ok">Hello</h1>
+        <h1 className="text-center ok">COVID-19 Tracker</h1>
+        <div className="container">
+          <Cards data={data} />
+        </div>
       </div>
     );
   }
