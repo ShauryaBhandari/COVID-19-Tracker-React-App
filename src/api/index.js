@@ -15,11 +15,20 @@ export const fetchData = async () => {
       lastUpdate: lastUpdate,
     };
     return modifiedData;
-  } catch (error) {}
+  } catch (error) {
+    return error;
+  }
 };
 
-export const dailyData = async () => {
+export const fetchDailyData = async () => {
   try {
     const { data } = await axios.get(`${url}/daily`);
-  } catch (error) {}
+    return data.map((dailyData) => ({
+      confirmed: dailyData.confirmed.total,
+      deaths: dailyData.deaths.total,
+      date: dailyData.reportDate,
+    }));
+  } catch (error) {
+    return error;
+  }
 };

@@ -4,7 +4,6 @@ import Chart from "./components/Chart/Chart";
 import CountrySelector from "./components/CountrySelector/CountrySelector";
 import "./App.css";
 import { fetchData } from "./api/index";
-
 export default class App extends Component {
   state = {
     data: {},
@@ -19,9 +18,10 @@ export default class App extends Component {
     const { data } = this.state;
     return (
       <div>
-        <h1 className="text-center ok">COVID-19 Tracker</h1>
+        <h1 className="text-center py-4">COVID-19 Tracker</h1>
         <div className="container">
           <Cards data={data} />
+          <Chart className="chart" />
         </div>
       </div>
     );
