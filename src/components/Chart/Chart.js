@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { fetchDailyData } from "../../api/index";
 import { Line, Bar } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import "./Chart.css";
-const Chart = () => {
+import { plugins } from "chart.js";
+const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
   const [dailyData, setDailyData] = useState([]);
 
   useEffect(() => {
@@ -13,7 +15,6 @@ const Chart = () => {
     fetchAPI();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // Line.defaults.global.defaultFontColor = "red";
 
   const lineChart =
     dailyData[0] !== 0 ? (
@@ -39,7 +40,29 @@ const Chart = () => {
         }}
       />
     ) : null;
-  return <div className="container my-4 chart">{lineChart}</div>;
+
+  const barChart = confirmed ? (
+    <Bar
+      data={{
+        labels: ["Infected", "Recovered", "Deaths"],
+        datasets: [
+          {
+            label: "People",
+            backgroundColor: ["#89ff00", "#00bcd4", "#e9537c"],
+            data: [confirmed.value, recovered.value, deaths.value],
+          },
+        ],
+      }}
+      options={{
+        legend: { display: false },
+        title: { display: true, text: `${country}` },
+      }}
+      plugins={[ChartDataLabels]}
+    />
+  ) : null;
+  return (
+    <div className="container my-4 chart">{country ? barChart : lineChart}</div>
+  );
 };
 
 export default Chart;

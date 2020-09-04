@@ -1,0 +1,13 @@
+option {
+  background: black;
+  color: white;
+}
+
+.custom-select,
+.custom-select:active,
+.custom-select:enabled {
+  background: black;
+  color: #fff;
+  margin: 1rem 0;
+  padding: 0 1rem;
+}
